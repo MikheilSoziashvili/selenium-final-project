@@ -101,7 +101,7 @@ public class TestCase {
     @Test(priority = 4)
     public void testCase4() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebDriverWait wait = new WebDriverWait(driver, 4);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         WebElement quantityValue = driver.findElement(By.xpath("//p[@id='quantity_wanted_p']/input[@id='quantity_wanted']"));
         Select sel = new Select(driver.findElement(By.id("group_1")));
@@ -226,7 +226,7 @@ public class TestCase {
 
     // Filling Personal Information
     @Test(priority = 8)
-    public void testCase8() throws InterruptedException {
+    public void testCase8(){
         WebDriverWait wait = new WebDriverWait(driver, 7);
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("uniform-id_gender1")));
@@ -252,7 +252,6 @@ public class TestCase {
         driver.findElement(By.id("phone_mobile")).sendKeys("123456789");
         //Clicking Submit
         WebElement submitAccount = driver.findElement(By.id("submitAccount"));
-        Thread.sleep(2000);
         submitAccount.click();
     }
 
@@ -307,13 +306,16 @@ public class TestCase {
         action.moveToElement(contactButton).click().perform();
 
         Select heading = new Select(driver.findElement(By.id("id_contact")));
-        Select reference = new Select(driver.findElement(By.id("id_contact")));
-        heading.selectByValue("2");
+        Select reference = new Select(driver.findElement(By.xpath("//select[@name='id_order']")));
+        Select product = new Select(driver.findElement(By.xpath("//select[@name='id_product']")));
 
+        heading.selectByValue("2");
         reference.selectByIndex(1);
+        product.selectByIndex(1);
+
         driver.findElement(By.id("message")).sendKeys("message text");
 
-        File file = new File("src/test/test");
+        File file = new File("src/test/test.txt");
         driver.findElement(By.id("fileUpload")).sendKeys(file.getAbsolutePath());
 
         action.moveToElement(driver.findElement(By.id("submitMessage"))).click().perform();
