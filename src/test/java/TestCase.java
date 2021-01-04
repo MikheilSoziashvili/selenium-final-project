@@ -37,7 +37,7 @@ public class TestCase {
         driver.get("http://automationpractice.com/index.php");
         driver.manage().window().maximize();
         Actions action = new Actions(driver);
-        WebDriverWait wait = new WebDriverWait(driver, 3);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement womenButton = driver.findElement(By.xpath("//div[@id='block_top_menu']//a[@title='Women']"));
         action.moveToElement(womenButton).perform();
 
@@ -55,7 +55,7 @@ public class TestCase {
     public void testCase2() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Actions action = new Actions(driver);
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
         js.executeScript("arguments[0].scrollIntoView()", driver.findElement(By.xpath("//ul[starts-with(@class, 'product_list')]")));
         action.moveToElement(driver.findElement(By.cssSelector("div.product-container"))).perform();
@@ -75,7 +75,7 @@ public class TestCase {
     // Hovering On Every Available Photo in Quick View Frame
     @Test(priority = 3)
     public void testCase3() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         Actions action = new Actions(driver);
 
         List<WebElement> imageThumbnails = driver.findElements(By.xpath("//ul[@id='thumbs_list_frame']/child::li"));
@@ -87,7 +87,8 @@ public class TestCase {
             WebElement bigImage = driver.findElement(By.id("bigpic"));
             String temp = "p/" + i + "/" + i;
 
-            action.moveToElement(thumbnail).perform();
+            // მეორე moveToElement-is გარეშეც მუშაობს უბრალოდ ვიზუალი არიცვლება მიდის სათითაოდ ყველასთან სათითაოდ და src ატრიბუტიც იცვლება
+            action.moveToElement(thumbnail).moveToElement(thumbnail).perform();
             wait.until(ExpectedConditions.attributeContains(bigImage, "src", temp));
 
             if (!bigImage.getAttribute("src").contains(temp)) {
@@ -101,7 +102,7 @@ public class TestCase {
     @Test(priority = 4)
     public void testCase4() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
         WebElement quantityValue = driver.findElement(By.xpath("//p[@id='quantity_wanted_p']/input[@id='quantity_wanted']"));
         Select sel = new Select(driver.findElement(By.id("group_1")));
@@ -129,7 +130,7 @@ public class TestCase {
     // Adding Returned Element to Cart and Clicking Continue Shopping
     @Test(priority = 5)
     public void testCase5() {
-        WebDriverWait wait = new WebDriverWait(driver, 3);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         Actions action = new Actions(driver);
 
@@ -167,7 +168,7 @@ public class TestCase {
     @Test(priority = 6)
     public void testcase6() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebDriverWait wait = new WebDriverWait(driver, 4);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         Actions action = new Actions(driver);
 
         js.executeScript("window.scrollTo(document.body.scrollHeight,0)");
@@ -207,7 +208,7 @@ public class TestCase {
     //Clicking on Proceed To Checkout and Signing up Email
     @Test(priority = 7)
     public void testCase7() {
-        WebDriverWait wait = new WebDriverWait(driver, 7);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         WebElement formEl = driver.findElement(By.cssSelector("form[id^='create-account']"));
@@ -258,7 +259,7 @@ public class TestCase {
     // Clicking Proceed To Checkout After Filling Out Form
     @Test(priority = 9)
     public void testcase9() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String[] XPATH = {"//button[@type='submit' and @name='processAddress']", "//button[@type='submit' and @name='processCarrier']"};
         for (int i = 0; i < 2; i++) {
@@ -273,7 +274,6 @@ public class TestCase {
     @Test(priority = 10)
     public void testcase10() {
         WebElement alertWindow = driver.findElement(By.xpath("//p[contains(text(),'must agree')]"));
-        WebDriverWait wait = new WebDriverWait(driver, 2);
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         if (alertWindow.isDisplayed()) {
